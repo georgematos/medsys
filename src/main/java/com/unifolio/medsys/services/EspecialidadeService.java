@@ -1,9 +1,10 @@
 package com.unifolio.medsys.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.unifolio.medsys.domain.Especialidade;
@@ -16,9 +17,10 @@ public class EspecialidadeService {
 	@Autowired
 	EspecialidadeRepository repository;
 
-	public List<EspecialidadeDTO> findAll() {
-		return repository.findAll().stream().map(e -> new EspecialidadeDTO(e))
-				.collect(Collectors.toList());
+	public Page<EspecialidadeDTO> findAll(int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+		Page<EspecialidadeDTO> especialidadesDTO = repository.findAll(pageRequest).map(e -> new EspecialidadeDTO(e));
+		return especialidadesDTO;
 	}
 
 	public Especialidade findById(Long id) {
