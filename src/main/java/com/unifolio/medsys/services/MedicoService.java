@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.unifolio.medsys.domain.Especialidade;
@@ -21,17 +23,24 @@ public class MedicoService {
 	@Autowired
 	EspecialidadeRepository especialidadeRepository;
 
-	public List<MedicoDTO> findAll() {
-		return repository.findAll().stream().map(m -> new MedicoDTO(m)).collect(Collectors.toList());
+	public Page<MedicoDTO> findAll(int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+
+		Page<MedicoDTO> medicosDTO = repository.findAll(pageRequest).map(m -> new MedicoDTO(m));
+
+		return medicosDTO;
 	}
 
 	public Medico findById(Long id) {
 		return repository.findById(id).get();
 	}
 
-	public List<MedicoDTO> findMedicoByEspecialidade(Long especialidadeId) {
-		return repository.findMedicoByEspecialidade(especialidadeId).stream().map(m -> new MedicoDTO(m))
-				.collect(Collectors.toList());
+	public Page<MedicoDTO> findMedicoByEspecialidade(Long especialidadeId, int page, int size) {
+		PageRequest pageRequest = PageRequest.of(page, size);
+
+		Page<MedicoDTO> medicosDTO = repository.findMedicoByEspecialidade(especialidadeId, pageRequest).map(m -> new MedicoDTO(m));
+
+		return medicosDTO;
 	}
 
 	public void saveAll(List<Medico> medicos) {
