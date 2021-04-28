@@ -5,7 +5,17 @@ Olá, esta é a documentação da **MedSys** uma simples aplicação RESTful fei
 
 # Como consultar esta API
 
-Segue abaixo todos os endpoints com suas respectivas descrições
+Esta API suporta paginação, caso não seja passado nenhum parametro na requisição a página retornada é 0 e o número de registros é 10. Os Endpoints suportados são:
+
+`/medicos`
+`/medicos/especialidade`
+`/especialidades`
+
+Exemplos:
+`/medicos?page=1&size=2`
+`/medicos/especialidade?page=0&size=1`
+
+Seguem abaixo todos os endpoints com suas respectivas descrições
 
 ### GET /medicos
 retorna uma lista com todos os médicos cadastrados
